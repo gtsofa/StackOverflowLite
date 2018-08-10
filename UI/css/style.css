@@ -1,3 +1,14 @@
+body {
+  margin: 0;
+  font-family: "Lato","Helvetica Neue",Helvetica,Arial,sans-serif;
+  background: url("../img/restaurant.png");
+
+}
+body,html {
+  height: 100%;
+}
+
+
 ul {
   list-style-type: none;
   margin: 0;
@@ -148,6 +159,16 @@ button:hover {
 .container {
   padding: 16px;
 }
+
+.containerleft {
+    padding: 10px;
+    float: left;
+    
+}
+
+/*.container_right {*/
+/*    padding: 5px;*/
+/*}*/
 
 /* Clear floats */
 .clearfix::after {
