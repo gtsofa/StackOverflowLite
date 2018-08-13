@@ -39,3 +39,9 @@ def post_question():
     return jsonify({"message" : "Question posted successfully", 
                                     "user_id": user_id}), 201
 
+@question.route('', methods=['GET'])
+def get_questions():
+    """
+    Retrieve all questions
+    """
+    return jsonify(quizz.questions), 200
