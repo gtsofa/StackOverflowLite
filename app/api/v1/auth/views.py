@@ -33,3 +33,8 @@ def register_user():
     user.users[data['username']] = new_user
     return jsonify({"message" : "User registered successfully", 
                                     "user_id": user_id}), 201
+
+@auth.route('/users', methods=['GET'])
+def get_all_users():
+    """Get all registered users"""
+    return jsonify(user.users), 200
