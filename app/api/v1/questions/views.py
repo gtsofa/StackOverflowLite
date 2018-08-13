@@ -67,3 +67,24 @@ def get_my_questions():
         if one_quizz.get("user_id") == user_id:
             my_questions.append(one_quizz)
     return jsonify({"my_questions": my_questions}), 200
+
+@question.route('/questions/<int:question_id>', methods=['GET'])
+def get_one_questions(question_id):
+    """
+    Retrieve a sinle question from the system
+    """
+    errors = {}
+    single_question = {}
+    error = []
+    if len(all_questions) == 0:
+        errors['message'] = "There are no questions. Post one first"
+    for one_question in quizz.questions.values():
+        if one_question["question_id"] == question_id:
+            single_question = one_question
+        else:
+            error.append("The question does not exist.")
+    if len(single_question) == 0:
+        errors["missing_question"] = "The question does not exist."
+    if errors:
+        return jsonify(errors)
+    return jsonify(single_question), 200
