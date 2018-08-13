@@ -12,6 +12,6 @@ def create_app(config_name):
 
     # Register the question blueprint
     from app.api.v1.questions import question as question_blueprint
-    app.register_blueprint(question_blueprint, url_prefix='/api/v1/questions')
+    app.register_blueprint(question_blueprint, url_prefix='/api/v1')
 
     return app
