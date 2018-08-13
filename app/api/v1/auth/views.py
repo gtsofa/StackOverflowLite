@@ -6,6 +6,7 @@ from . import auth
 from app.api.v1.auth.models import User
 
 user = User()
+all_users = user.users
 
 def logged_in(fn):
     """
