@@ -1,10 +1,24 @@
 from flask import jsonify, request
+from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import auth
 from app.api.v1.auth.models import User
 
 user = User()
+
+def logged_in(fn):
+    """
+    Decorator to check whether user is logged in or not
+    """
+    @wraps(fn)
+    def decorated(*args, **kwargs):
+        for one_user in user.users.values():
+            if not one_user.get('logged_in'):
+                return jsonify({"message": "You must log in first"}), 401
+        return fn(*args, **kwargs)
+    return decorated
+        
 
 @auth.route('/register', methods=['POST'])
 def register_user():
@@ -39,8 +53,11 @@ def register_user():
                                     "user_id": user_id}), 201
 
 @auth.route('/users', methods=['GET'])
+@logged_in
 def get_all_users():
-    """Get all registered users"""
+    """
+    Get all registered users
+    """
     return jsonify(user.users), 200
 
 @auth.route('/login', methods=['POST'])
@@ -73,3 +90,14 @@ def login():
         return jsonify(errors)
     if message:
         return jsonify(message)
+
+@auth.route('/logout', methods=['POST'])
+@logged_in
+def logout():
+    """
+    User logout
+    """
+    for one_user in user.users.values():
+        if one_user.get('logged_in') == True:
+            one_user['logged_in'] = False
+    return jsonify({"message": "You have logged out successfully"}), 200    
