@@ -1,6 +1,6 @@
 # StackOverflowLite
 [![Build Status](https://travis-ci.org/gtsofa/StackOverflowLite.svg?branch=develop)](https://travis-ci.org/gtsofa/StackOverflowLite)
-
+[![Coverage Status](https://coveralls.io/repos/github/gtsofa/StackOverflowLite/badge.svg?branch=develop)](https://coveralls.io/github/gtsofa/StackOverflowLite?branch=develop)
 
 ##### Project Overview
 StackOverflowLite is a platform where people can ask questions and provide answers.
