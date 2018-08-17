@@ -1,0 +1,9 @@
+[report]
+omit =
+    */python?.?/*
+    */site-packages/nose/*
+    *runserver.py*
+    */venv/*
+    */instance/*
+    *config.py*
+    *__init__.py*
