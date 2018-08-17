@@ -193,3 +193,114 @@ button:hover {
   color: white;
   text-align: center;
 }
+
+/* table style section*/
+table {
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 80%;
+    margin-left: 20%;
+}
+
+
+td, th {
+	
+    text-align: left;
+    padding: 8px;
+    border-bottom:1px solid #dadfea
+}
+a {
+text-decoration:none;}
+
+tr:nth-child(even) {
+	
+    background-color: #fbfcff;/*#dddddd;*/
+    border-bottom:1px solid #dadfea
+}
+h2 a{
+    color: black;
+    
+}
+
+.navbar input {
+    margin: 0;
+    height: 36px;
+    border-width: 1px;
+    border-color: #c8ccd0;
+    border-radius: 3px;
+    width: 20%;
+    font-size: 14px;
+    background-color: #FFF;
+    box-shadow: none;
+    color: #3b4045;
+}
+
+.navbar{
+    width:100%;
+    background-color: #333;/*#F0F0F0;*/
+}
+
+.inner-navbar {
+    width: 70%;
+    margin-left: 15%;
+    background-color: #333;
+}
+
+.main-container {
+    width:70%;
+    margin-left: 15%;
+}
+
+/*sign up form section*/
+.sign-up {
+    padding: 18px;
+    /* text-align: center; */
+    margin-left: 33%;
+}
+.login {
+    padding: 18px;
+    margin-left: 33%;
+}
+
+.ask-question {
+    padding: 18px;
+    margin-left: 33%;
+}
+
+
+
+/* question button section*/
+.containerleft button {
+    width: 100%;
+    padding: 10px;
+    background: #3498db;
+    
+}
+
+button.ask-question a {
+    color: #fff;
+}
+.question-stats {
+  
+}
+
+
+ul.question-stats {
+    background-color: #fff;
+}
+
+.question-stats li {
+    float: left;
+}
+.question-stats li a{
+  color:#333;
+  font-weight: bold;
+}
+
+.user-table {
+    width: 70%;
+}
+
+.user-table tr td img{
+  float: left;
+}
