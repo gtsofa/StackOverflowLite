@@ -268,7 +268,6 @@ h2 a{
 }
 
 
-
 /* question button section*/
 .containerleft button {
     width: 100%;
@@ -280,10 +279,6 @@ h2 a{
 button.ask-question a {
     color: #fff;
 }
-.question-stats {
-  
-}
-
 
 ul.question-stats {
     background-color: #fff;
