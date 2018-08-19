@@ -141,7 +141,7 @@ DELETE | /StackOverFlowLite/api/v1/questions/questionID/answer/answerID | Delete
 4. Create a pull request
 
 #### License 
-The software is protected under [IT License](https://github.com/gtsofa/StackOverflowLite/blob/master/LICENSE)
+The software is protected under [MIT License](https://github.com/gtsofa/StackOverflowLite/blob/master/LICENSE)
 
 #### Contributors
 * [Julius Nyule](https://github.com/gtsofa)
