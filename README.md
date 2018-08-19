@@ -3,10 +3,10 @@
 [![Coverage Status](https://coveralls.io/repos/github/gtsofa/StackOverflowLite/badge.svg?branch=develop)](https://coveralls.io/github/gtsofa/StackOverflowLite?branch=develop)
 [![Maintainability](https://api.codeclimate.com/v1/badges/a99a88d28ad37a79dbf6/maintainability)](https://codeclimate.com/github/codeclimate/codeclimate/maintainability)
 
-##### Project Overview
+#### Project Overview
 StackOverflowLite is a platform where people can ask questions and provide answers.
 
-##### Required Features
+#### Required Features
 1. A user can create an account and log in
 2. A user can post questions
 3. A user can delete the questions they post
@@ -14,9 +14,9 @@ StackOverflowLite is a platform where people can ask questions and provide answe
 5. A user can view the answers to the questions
 6. A user can accept answer out of all answers to his/her questions as the preferred answer.
 
-##### Challenge 1 - Create UI Templates
+## Challenge 1 - Create UI Templates
 
-##### The Interface
+#### The Interface
 1. [Home Page](https://gtsofa.github.io/StackOverflowLite/UI/)
 2. [User Registration](https://gtsofa.github.io/StackOverflowLite/UI/sign_up.html)
 3. [User Login](https://gtsofa.github.io/StackOverflowLite/UI/log_in.html)
@@ -24,37 +24,39 @@ StackOverflowLite is a platform where people can ask questions and provide answe
 5. [Post a question page](https://gtsofa.github.io/StackOverflowLite/UI/questions.html)
 6. [View questions and answers page](https://gtsofa.github.io/StackOverflowLite/UI/questions_answers.html)
 
-## StackOverFlowLite Complete UI template on gh-pages
+#### StackOverFlowLite Complete UI template on gh-pages
 
 * [gh-pages link](https://gtsofa.github.io/StackOverflowLite/UI/)
 
-### Getting started
+#### Getting started
 
 The following instructions will get a copy of StackOverFlowLite up and running on your machine for development and testing purposes
 
-### Requirements
+#### Requirements
 StackOverFlowLite will require the following:
 
 * A computer running on any distribution of Unix or Mac or Windows OS
 
-### Installation
+#### Installation
 
+```bash
 # Clone the repository to your local machine
 $ git clone https://github.com/gtsofa/StackOverflowLite.git
 # Navigate to the directory
 $ cd StackOverflowLite/UI
 # Open the file
 $ Open index.html file with a browser of your choice
+```
 
 
 
 ### Challenge 2 - Create API endpoints
 
-### Getting started
+#### Getting started
 
 The following instructions will get a copy of StackOverFlowLite up and running on your machine for development and testing purposes
 
-### Requirements
+#### Requirements
 
 StackOverFlowLite will require the following:
 
@@ -65,10 +67,11 @@ StackOverFlowLite will require the following:
 * Git
 * Virtualenv 
 
-### Installation
+#### Installation
 
 To clone and run this application, you will need [Git](https://git-scm.com/) installed on your computer. From your command line:
 
+```bash
 # Clone this repository to your local machine
 $ git clone https://github.com/gtsofa/StackOverflowLite.git
 
@@ -89,10 +92,11 @@ $ python3 run.py
 
 ### Run the tests
 $ nosetests --with-coverage
+```
 
-### API endpoints
+#### API endpoints
 
-### Users Endpoints
+#### Users Endpoints
 
 Method | Endpoint | Functionality
 --- | --- | ---
@@ -102,7 +106,7 @@ POST | /StackOverFlowLite/api/v1/auth/logout | Logs out a user
 PUT | /StackOverFlowLite/api/v1/auth/reset-password | Reset a password for a logged user
 DELETE | /StackOverFlowLite/api/v1/questions/question-ID | Delete a request of a logged in user
 
-### Questions Endpoints
+#### Questions Endpoints
 
 Method | Endpoint | Functionality
 --- | --- | ---
@@ -113,7 +117,7 @@ GET | /StackOverFlowLite/api/v1/questions/questionID | List a question
 PUT | /StackOverFlowLite/api/v1/questions/questionID | Edit a question of a logged in user
 DELETE | /StackOverFlowLite/api/v1/questions/questionID | Delete a request of a logged in user
 
-### Answers Endpoints
+#### Answers Endpoints
 
 Method | Endpoint | Functionality
 --- | --- | ---
@@ -123,23 +127,23 @@ PUT | /StackOverFlowLite/api/v1/questions/questionID/answer/answerID | Edit an a
 DELETE | /StackOverFlowLite/api/v1/questions/questionID/answer/answerID | Delete an answer
 
 
-## StackOverFlowLite hosted on Heroku
+#### StackOverFlowLite hosted on Heroku
 * [stackoverflowlite on heroku](https://gtsofastackoverflowlite.herokuapp.com/api/v1)
 
-### Build with
+#### Build with
 * HTML, CSS, Javascript
 * Flask RESTful API
 
-### How to Contribute
+#### How to Contribute
 1. Fork the repository to your github account
 2. Create a branch
 3. Make changes
 4. Create a pull request
 
-## License 
+#### License 
 The software is protected under [IT License](https://github.com/gtsofa/StackOverflowLite/blob/master/LICENSE)
 
-## Contributors
+#### Contributors
 * [Julius Nyule](https://github.com/gtsofa)
 
 
