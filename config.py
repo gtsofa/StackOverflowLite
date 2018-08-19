@@ -1,9 +1,20 @@
 # config.py
+import os
+import psycopg2
+
+
+try:
+    conn = psycopg2.connect(
+        "dbname=stack_dev host=localhost user=stack password=stack123")
+except Exception as e:
+    print("Unable to connect to the database", e)
+
 class Config(object):
     """Default configuration"""
 
     DEBUG = False
     TESTING = False
+    SECRET = os.getenv("SECRET")
 
 class TestingConfig(Config):
     """Testing configuration"""

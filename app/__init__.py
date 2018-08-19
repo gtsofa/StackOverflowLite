@@ -14,4 +14,12 @@ def create_app(config_name):
     from app.api.v1.questions import question as question_blueprint
     app.register_blueprint(question_blueprint, url_prefix='/api/v1')
 
+    # Register the auth_v2 blueprint
+    from app.api.v2.auth import auth_v2 as auth_v2_blueprint
+    app.register_blueprint(auth_v2_blueprint, url_prefix='/api/v2/auth')
+
+    # Register the question_v2 blueprint
+    from app.api.v2.questions import question_v2 as question_v2_blueprint
+    app.register_blueprint(question_v2_blueprint, url_prefix='/api/v2')
+
     return app
