@@ -1,6 +1,7 @@
 import os
 import jwt
 import datetime
+from functools import wraps
 from flask import request, jsonify
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -10,6 +11,33 @@ from config import conn
 
 cur = conn.cursor()
 users = User.get_users(cur)
+
+def auth_required(fn):
+    """
+    This is required for authentication
+    """
+    @wraps(fn)
+    def decorated(*args, **kwargs):
+        token = None
+        user = {}
+        data = request.get_json()
+        if "x-access-token" in request.headers:
+            token = request.headers["x-access-token"]
+        if not token:
+            return jsonify({"message":"Token is missing"}), 401
+        for one_user in users:
+            if one_user["username"] == data["username"]:
+                user = one_user
+        if not user:
+            return jsonify({"missing_user":"User not found, register one first"}), 401
+        try:
+            data = jwt.decode(token, os.getenv("SECRET"))
+            current_user = user
+        except:
+            return jsonify({"message":"Token is invalid"}), 401
+        return fn(current_user, *args, **kwargs)
+    return decorated
+
 
 @auth_v2.route("/register", methods=["POST"])
 def register_user():
@@ -66,3 +94,13 @@ def login():
         return jsonify({"authentication_error":"Username does not match password"}), 401
     except(ValueError, KeyError,TypeError):
         return jsonify({"message":"Enter all details to login"}), 400
+
+@auth_v2.route("/users", methods=['GET'])
+# @auth_required
+def get_users():
+    """
+    Return all users 
+    """
+    if not users:
+        return jsonify({"message": "No users found"}), 404
+    return jsonify({"users": users}), 200
