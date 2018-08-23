@@ -38,7 +38,7 @@ def auth_required(fn):
 
 @auth_v2.route("/register", methods=["POST"])
 @auth_required
-def register_user(current_user):
+def register_user():
     """
     Register a user
     """

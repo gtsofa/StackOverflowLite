@@ -21,6 +21,8 @@ class CreateUserTestCase(unittest.TestCase):
         self.test_login = {"email":"tsofa@stack.com", "password":"pass141"}
         self.another_user = {"username":"mloi", "email":"mloi@stack.com", "password":"mloi234", "confirm_password":"mloi234"}
         self.grande = {"username":"saumu", "email":"saumu@stack.com", "password":"0101", "confirm_password":"0101"}
+        self.user = {"username":"mae", "email":"mae@stack.com", "password":"1040", "confirm_password":"4010"}
+        self.login_user = {"email":"mae@stack.com", "password":"1040"}
 
     def test_create_user(self):
         """
@@ -80,6 +82,23 @@ class CreateUserTestCase(unittest.TestCase):
                     content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
+    def test_sign_out_user(self):
+        """
+        Test api can sign out a user
+        """
+        # Register user
+        self.client().post('/api/v2/auth/register', 
+                    data=json.dumps(self.user),
+                    content_type='application/json')
+        # Sign in user
+        self.client().post('/api/v2/auth/login',
+                    data=json.dumps(self.login_user),
+                    content_type='application/json')
+        # Log user out
+        response = self.client().post('/api/v2/auth/logout',
+                    data=json.dumps(self.user),
+                    content_type='application/json')
+        self.assertEqual(response.status_code, 200)
 
 
 
