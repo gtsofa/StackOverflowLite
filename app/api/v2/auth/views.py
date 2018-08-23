@@ -20,18 +20,15 @@ def auth_required(fn):
     def decorated(*args, **kwargs):
         token = None
         user = {}
-        data = request.get_json()
         if "x-access-token" in request.headers:
             token = request.headers["x-access-token"]
         if not token:
             return jsonify({"message":"Token is missing"}), 401
-        for one_user in users:
-            if one_user["username"] == data["username"]:
-                user = one_user
-        if not user:
-            return jsonify({"missing_user":"User not found, register one first"}), 401
         try:
             data = jwt.decode(token, os.getenv("SECRET"))
+            for one_user in users:
+                if one_user["username"] == data["username"]:
+                    user = one_user
             current_user = user
         except:
             return jsonify({"message":"Token is invalid"}), 401
@@ -40,7 +37,8 @@ def auth_required(fn):
 
 
 @auth_v2.route("/register", methods=["POST"])
-def register_user():
+@auth_required
+def register_user(current_user):
     """
     Register a user
     """
