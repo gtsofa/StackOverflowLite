@@ -6,6 +6,9 @@ body {
 }
 body,html {
   height: 100%;
+  font-size: 13px;
+  line-height: 1.26666667;
+  color: #242729;
 }
 
 
@@ -241,14 +244,15 @@ h2 a{
 }
 
 .inner-navbar {
-    width: 70%;
-    margin-left: 15%;
+    width: 80%;
+    margin-left: 10%;
     background-color: #333;
+   
 }
 
 .main-container {
-    width:70%;
-    margin-left: 15%;
+    width:80%;
+    margin-left: 5%;
 }
 
 /*sign up form section*/
@@ -263,8 +267,8 @@ h2 a{
 }
 
 .ask-question {
-    padding: 18px;
-    margin-left: 33%;
+  padding: 18px;
+  margin-left: 19%;
 }
 
 
@@ -303,4 +307,24 @@ ul.question-stats {
 
 .user-table tr td img{
   float: left;
+}
+
+/* grid layout section*/
+.grid-layout {
+  display: grid;
+  grid-gap: 8px;
+  margin-left: 2%;
+
+}
+
+/* Add pagination section*/
+.pagination {
+  display: inline-block;
+}
+
+.pagination a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
 }
