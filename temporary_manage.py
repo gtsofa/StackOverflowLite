@@ -2,19 +2,13 @@
 
 # create a tables for the application
 
-import psycopg2
-from flask import current_app
-from app import app_config
+import os
+from config import app_config
+from app import create_app
 
-# from config import conn
-
-
-try:
-    conn = psycopg2.connect(
-        "dbname=stack_dev host=localhost user=stack password=stack123")
-except Exception as e:
-    print("Unable to connect to the database", e)
-
+config_name = os.getenv('FLASK_CONFIG')
+app = create_app(config_name)
+conn = app.config["CONN"]
 
 def migration():
     """
@@ -35,7 +29,7 @@ def migration():
             confirm_password VARCHAR(250)
 
         );"""
-        
+
         # create questions table
         questions = """CREATE TABLE questions (
             id SERIAL PRIMARY KEY,
