@@ -146,12 +146,14 @@ PUT | /StackOverFlowLite/api/v2/questions/questionID/answers/answerID | Mark an 
 
 
 
+
 #### StackOverFlowLite hosted on Heroku
 * [stackoverflowlite on heroku](https://gtsofastackoverflowlite.herokuapp.com/api/v1)
 
 #### Build with
 * HTML, CSS, Javascript
 * Flask RESTful API
+* Postgres
 
 #### How to Contribute
 1. Fork the repository to your github account
