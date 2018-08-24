@@ -1,7 +1,11 @@
 # app/api/v2/questions/test_questions
 
-import unittest
 
+
+import unittest
+from app import create_app
+
+import json
 
 class CreateQuestionTestCase(unittest.TestCase):
     """
@@ -14,11 +18,56 @@ class CreateQuestionTestCase(unittest.TestCase):
         self.app = create_app(config_name="testing")
         self.client = self.app.test_client
 
+        self.user = {
+            "username":"mama", 
+            "email": "leeann@stackoverflow.com",
+            "password": "Mama456",
+            "confirm_password": "Mama456"
+        }
+        self.login_user = {
+            "username":"mama",
+            "password": "Mama456"
+        }
+        self.one_question = {
+            "question_title":"What is Flask",
+            "question_desc":"I am a beginner and I wanna know what flask is"
+        } 
+        self.two_question = {
+            "question_title":"What is Postgres",
+            "question_desc":"Lorem ipsum dolor sit amet"
+        }
+        self.one_answer = {
+            "answer_text":"Flask is a Python microframework"
+        }
+        self.reg_user = {
+            "username":"john", 
+            "email": "john@stackoverflow.com",
+            "password": "Mama456",
+            "confirm_password": "Mama456"
+        }
+        self.login_reg_user = {
+           "username":"john",
+            "password": "Mama456"
+        }
+        # Register a user
+        self.client().post('/api/v2/auth/register', 
+                    data=json.dumps(self.reg_user),
+                    content_type='application/json')
+        # Sign in user
+        self.client().post('/api/v2/auth/login',
+                    data=json.dumps(self.login_reg_user),
+                    content_type='application/json')
+
     def tearDown(self):
         """
         Will destroy the test data after test runs
         """
-        pass
+       self.user.clear()
+        self.login_user.clear()
+        self.reg_user.clear()
+        self.login_reg_user.clear()
+        self.one_question.clear()
+        self.two_question.clear()
 
 
 

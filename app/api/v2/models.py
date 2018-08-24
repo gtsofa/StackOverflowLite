@@ -33,34 +33,35 @@ class User:
 
         return results
 
-
 class Question:
     """
     Implement a question
     """
-    def __init__(self, question_title, question_desc):
+    def __init__(self, question_title, question_desc, date_created, user_id):
         self.question_title = question_title
         self.question_desc = question_desc
+        self.date_created = date_created
+        self.user_id = user_id
 
     @staticmethod
-    def create_question(cursor, question_title, question_desc):
-        query = "INSERT INTO questions (question_title, question_desc) VALUES (%s, %s);"
-        cursor.execute(query, (question_title, question_desc))
+    def create_question(cursor, question_title, question_desc, date_created, user_id):
+        query = "INSERT INTO questions (title, description, date_created, user_id) VALUES (%s, %s, %s, %s);"
+        cursor.execute(query, (question_title, question_desc, date_created, user_id))
         conn.commit()
 
     @staticmethod
     def get_questions(cursor):
         query = "SELECT * FROM questions;"
         cursor.execute(query)
-        questions = cursor.execute.fetchall()
+        questions = cursor.fetchall()
         response = []
         for question in questions:
             details_data = {}
             details_data["question_id"] = question[0]
             details_data["question_title"] = question[1]
             details_data["question_desc"] = question[2]
-            details_data["user_id"] = question[3]
-            details_data["date_modified"] = question[4]
+            details_data["date_created"] = question[3]
+            details_data["user_id"] = question[4]
             response.append(details_data)
 
         return response
@@ -81,7 +82,12 @@ class Answer:
 
     @staticmethod
     def get_answers(cursor):
+
         # how to fetch answers belong to a question
+        pass
+
+
+
 
         
 

@@ -30,7 +30,7 @@ def migration():
             id SERIAL PRIMARY KEY,
             title VARCHAR(50),
             description TEXT,
-            date_created TIMESTAMP,
+            date_created VARCHAR(50),
             user_id INT references users(id)
         );"""
 
@@ -38,7 +38,7 @@ def migration():
         answers = """CREATE TABLE answers (
             id SERIAL PRIMARY KEY,
             answer_text TEXT,
-            date_created TIMESTAMP,
+            date_created VARCHAR(50),
             question_id INT references questions(id),
             user_id INT references users(id)
         );"""
@@ -47,7 +47,7 @@ def migration():
         comments = """CREATE TABLE comments (
             id SERIAL PRIMARY KEY,
             comments_text TEXT,
-            date_created TIMESTAMP,
+            date_created VARCHAR(50),
             question_id INT references questions(id),
             user_id INT references users(id),
             answer_id INT references answers(id)
