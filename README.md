@@ -127,6 +127,25 @@ PUT | /StackOverFlowLite/api/v1/questions/questionID/answer/answerID | Edit an a
 DELETE | /StackOverFlowLite/api/v1/questions/questionID/answer/answerID | Delete an answer
 
 
+### Challenge 3 - Create more API endpoints and integrating with database
+
+## Requirements 
+ Create the API endpoints below
+
+ Method | Endpoint | Functionality
+--- | --- | ---
+POST | /StackOverFlowLite/api/v2/auth/signup | Register a user
+POST | /StackOverFlowLite/api/v2/auth/login | Logs in a user
+GET | /StackOverFlowLite/api/v2/questions | Fetches all questions
+GET | /StackOverFlowLite/api/v2/questions/questionID | Fetches a specific question
+POST | /StackOverFlowLite/api/v2/questions | Post a question
+DELETE | /StackOverFlowLite/api/v2/questions/questionID | Delete a question
+POST | /StackOverFlowLite/api/v2/questions/questionID/answer | Post an answer to a question 
+PUT | /StackOverFlowLite/api/v2/questions/questionID/answers/answerID | Mark an answer as an acepted
+
+
+
+
 #### StackOverFlowLite hosted on Heroku
 * [stackoverflowlite on heroku](https://gtsofastackoverflowlite.herokuapp.com/api/v1)
 
