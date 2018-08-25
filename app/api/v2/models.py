@@ -104,25 +104,35 @@ class Question:
         query = "DELETE FROM questions WHERE id=%s;"
         cursor.execute(query, [question_id])
 
-
 class Answer:
     """
     Implement the answer
     """
-    def __init__(self, answer_body):
-        self.answer_body = answer_body
+    def __init__(self, answer_text):
+        self.answer_text = answer_text
 
     @staticmethod
-    def create_answer(cursor, answer_body):
-        query = "INSERT INTO answers(answer_body) VALUES (%s);"
-        cursor.execute(query, (answer_body))
+    def create_answer(cursor, answer_text, date_created, question_id, user_id):
+        query = "INSERT INTO answers(answer_text, date_created, question_id, user_id) VALUES (%s, %s, %s, %s);"
+        cursor.execute(query, (answer_text, date_created, question_id, user_id))
         conn.commit()
 
     @staticmethod
-    def get_answers(cursor):
+    def get_answers_to_question(cursor, question_id):
+        query = "SELECT * FROM answers WHERE question_id=%s;"
+        cursor.execute(query, [question_id])
+        answers = cursor.fetchall()
+        response = []
+        for answer in answers:
+            details_data = {}
+            details_data["answer_id"] = answer[0]
+            details_data["answer_text"] = answer[1]
+            details_data["date_created"] = answer[2]
+            details_data["question_id"] = answer[3]
+            details_data["user_id"] = answer[4]
+            response.append(details_data)
 
-        # how to fetch answers belong to a question
-        pass
+        return response
 
 
 

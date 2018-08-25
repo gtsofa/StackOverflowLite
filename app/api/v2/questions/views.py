@@ -26,7 +26,6 @@ def post_a_question(current_user):
     """
     try:
         questions = Question.get_questions(cur)
-        # users = User.get_users(cur)
         data = request.get_json()
         errors = {}
 
@@ -95,17 +94,68 @@ def delete_single_question(current_user, questionID):
     """
     questions = Question.get_questions(cur)
     question = {}
-    # for one_question in questions:
-    #     if one_question["question_id"] == questionID:
-    #         question = one_question
-    # if not question:
-    #     return({"missing_question": "Question not found"}), 404
-    # if question["user_id"] != current_user["user_id"]:
-    #     return({"Unauthorised": "Users can only delete their questions"}), 401
-    # Question.delete_a_question(cur, questionID)
-    # return jsonify({"message": "Question deleted successfully"}), 200
-    return jsonify({"user_id": current_user["user_id"]})
-    
+    for one_question in questions:
+        if one_question["question_id"] == questionID:
+            question = one_question
+    if not question:
+        return jsonify({"missing_question": "Question not found"}), 404
+    if question["user_id"] != current_user["user_id"]:
+        return({"Unauthorised": "Users can only delete their questions"}), 401
+    Question.delete_a_question(cur, questionID)
+    return jsonify({"message": "Question deleted successfully"}), 200
+
+@question_v2.route('/questions/<int:questionID>/answers', methods=["POST"])
+@auth_required
+def post_an_answer(current_user, questionID):
+    """
+    Post an answer to a question
+    """
+    try:
+        data = request.get_json()
+        errors = {}
+
+        # check for missing details
+        if not data['answer_text']:
+            errors["missing_details"] = "Enter answer text"
+        questions = Question.get_questions(cur)
+        question = {}
+        for one_question in questions:
+            if one_question["question_id"] == questionID:
+                question = one_question
+        if not question:
+            return jsonify({"missing_question": "Question not found"}), 404
+
+        if errors:
+            return jsonify(errors), 400
+
+        user_id = current_user["user_id"]
+        date_created = (now.strftime("%d-%m-%Y %H:%M:%S"))
+        question_id = question["question_id"]
+        
+
+        # everything is OK so save answer to db
+        Answer.create_answer(cur , data["answer_text"], date_created, question_id, user_id)
+        return jsonify({"message":"Answer successfully posted"}), 201
+    except(ValueError, KeyError, TypeError):
+        return jsonify({"message":"Enter all answer details to continue"}), 400
+
+@question_v2.route('/questions/<int:questionID>/answers', methods=["GET"])
+def get_all_answers_to_a_question(questionID):
+    """
+    Get all answers to a question 
+    """
+    errors = {}
+    questions = Question.get_questions(cur)
+    question = {}
+    for one_question in questions:
+        if one_question["question_id"] == questionID:
+            question = one_question
+    if not question:
+        return jsonify({"missing_question": "Question not found"}), 404
+    if errors:
+        return jsonify(errors), 400
+    answers = Answer.get_answers_to_question(cur, questionID)
+    return jsonify({"answers": answers}), 200
 
 # mark an answer as acepted or update an answer
 @question_v2.route('questions/questionID/answers/answerID', methods=["PUT"])
