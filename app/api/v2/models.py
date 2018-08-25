@@ -99,6 +99,11 @@ class Question:
         details_data["user_id"] = question[4]
         return details_data
 
+    @staticmethod
+    def delete_a_question(cursor, question_id):
+        query = "DELETE FROM questions WHERE id=%s;"
+        cursor.execute(query, [question_id])
+
 
 class Answer:
     """

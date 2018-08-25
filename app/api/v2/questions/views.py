@@ -86,6 +86,25 @@ def get_single_question(questionID):
     if not question:
         return jsonify({"message": "Question not found"}), 404
     return jsonify(question)
+
+@question_v2.route('/questions/<int:questionID>', methods=["DELETE"])
+@auth_required
+def delete_single_question(current_user, questionID):
+    """
+    Delete a single question by id
+    """
+    questions = Question.get_questions(cur)
+    question = {}
+    # for one_question in questions:
+    #     if one_question["question_id"] == questionID:
+    #         question = one_question
+    # if not question:
+    #     return({"missing_question": "Question not found"}), 404
+    # if question["user_id"] != current_user["user_id"]:
+    #     return({"Unauthorised": "Users can only delete their questions"}), 401
+    # Question.delete_a_question(cur, questionID)
+    # return jsonify({"message": "Question deleted successfully"}), 200
+    return jsonify({"user_id": current_user["user_id"]})
     
 
 # mark an answer as acepted or update an answer
