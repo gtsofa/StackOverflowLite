@@ -10,7 +10,6 @@ from app.api.v2.models import User
 from config import conn
 
 cur = conn.cursor()
-users = User.get_users(cur)
 
 def auth_required(fn):
     """
@@ -18,6 +17,7 @@ def auth_required(fn):
     """
     @wraps(fn)
     def decorated(*args, **kwargs):
+        users = User.get_users(cur)
         token = None
         user = {}
         if "x-access-token" in request.headers:
@@ -48,7 +48,10 @@ def register_user():
         # check for details
         if not data['username'] or not data['email'] or not data['password'] or not data['confirm_password']:
             errors["missing_details"] = "Enter username, email, password and confirm_password to register"
+        if data["password"] != data["confirm_password"]:
+            errors['missmatched password'] = "Password and confirm password must match to register"
         # check for duplicate username entry
+        users = User.get_users(cur)
         for user in users:
             if user["username"] == data["username"]:
                 errors["duplicate_username"] = "Username already exists. Try another one!"
@@ -74,6 +77,7 @@ def login():
         if not data["username"] or not data["password"]:
             errors["missing_details"] = "Enter username and password to login"
         # check if user exists
+        users = User.get_users(cur)
         for one_user in users:
             if one_user["username"] == data["username"]:
                 user = one_user
@@ -86,18 +90,19 @@ def login():
             token = jwt.encode({"username":user["username"], 
             "exp":datetime.datetime.utcnow() + datetime.timedelta(
                 minutes=120)}, os.getenv('SECRET'))
-            return jsonify({"token":token.decode("UTF-8"), "user_id":user["user_id"]}), 200
+            return jsonify({"token":token.decode("UTF-8")}), 200
         # check if authentication fails
         return jsonify({"authentication_error":"Username does not match password"}), 401
     except(ValueError, KeyError,TypeError):
         return jsonify({"message":"Enter all details to login"}), 400
 
 @auth_v2.route("/users", methods=['GET'])
-# @auth_required
-def get_users():
+@auth_required
+def get_users(current_user):
     """
     Return all users 
     """
+    users = User.get_users(cur)
     if not users:
         return jsonify({"message": "No users found"}), 404
     return jsonify({"users": users}), 200
