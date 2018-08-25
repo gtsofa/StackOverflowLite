@@ -18,7 +18,6 @@ cur = conn.cursor()
 now = datetime.datetime.now()
 
 
-# post a question
 @question_v2.route('/questions', methods=["POST"])
 @auth_required
 def post_a_question(current_user):
@@ -53,8 +52,6 @@ def post_a_question(current_user):
     except(ValueError, KeyError, TypeError):
         return jsonify({"message":"Enter all question details to continue"}), 400
 
-
-# get all questions
 @question_v2.route('/questions', methods=["GET"])
 def get_all_questions():
     """
@@ -66,9 +63,20 @@ def get_all_questions():
 
     return jsonify({"questions": questions}), 200
 
+@question_v2.route('/my-questions', methods=["GET"])
+@auth_required
+def get_all_users_questions(current_user):
+    """
+    Get all questions 
+    """
+    user_id = current_user["user_id"]
+    questions = Question.get_users_questions(cur, user_id)
+    if not questions:
+        return jsonify({"message": "No questions found"}), 404
+
+    return jsonify({"questions": questions}), 200
 
 
-# get a single question by id
 @question_v2.route('/questions/<int:questionID>', methods=["GET"])
 def get_single_question(questionID):
     """
