@@ -112,9 +112,9 @@ class Answer:
         self.answer_text = answer_text
 
     @staticmethod
-    def create_answer(cursor, answer_text, date_created, question_id, user_id):
-        query = "INSERT INTO answers(answer_text, date_created, question_id, user_id) VALUES (%s, %s, %s, %s);"
-        cursor.execute(query, (answer_text, date_created, question_id, user_id))
+    def create_answer(cursor, answer_text, date_created, question_id, user_id, preferred):
+        query = "INSERT INTO answers(answer_text, date_created, question_id, user_id, preferred) VALUES (%s, %s, %s, %s, %s);"
+        cursor.execute(query, (answer_text, date_created, question_id, user_id, preferred))
         conn.commit()
 
     @staticmethod
@@ -130,9 +130,16 @@ class Answer:
             details_data["date_created"] = answer[2]
             details_data["question_id"] = answer[3]
             details_data["user_id"] = answer[4]
+            details_data["preferred"] = answer[5]
             response.append(details_data)
 
         return response
+
+    @staticmethod
+    def modify_answer(cursor, preferred, answer_id):
+        query = "UPDATE answers SET preferred=%s WHERE (id=%s)"
+        cursor.execute(query, (preferred, answer_id))
+        conn.commit()
 
 
 

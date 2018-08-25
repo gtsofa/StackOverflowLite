@@ -40,7 +40,8 @@ def migration():
             answer_text TEXT,
             date_created VARCHAR(50),
             question_id INT references questions(id),
-            user_id INT references users(id)
+            user_id INT references users(id),
+            preferred BOOLEAN NOT NULL
         );"""
 
         # create comments table

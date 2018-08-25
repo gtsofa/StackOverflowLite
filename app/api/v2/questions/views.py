@@ -131,10 +131,10 @@ def post_an_answer(current_user, questionID):
         user_id = current_user["user_id"]
         date_created = (now.strftime("%d-%m-%Y %H:%M:%S"))
         question_id = question["question_id"]
+        preferred = False
         
-
         # everything is OK so save answer to db
-        Answer.create_answer(cur , data["answer_text"], date_created, question_id, user_id)
+        Answer.create_answer(cur , data["answer_text"], date_created, question_id, user_id, preferred)
         return jsonify({"message":"Answer successfully posted"}), 201
     except(ValueError, KeyError, TypeError):
         return jsonify({"message":"Enter all answer details to continue"}), 400
@@ -157,12 +157,32 @@ def get_all_answers_to_a_question(questionID):
     answers = Answer.get_answers_to_question(cur, questionID)
     return jsonify({"answers": answers}), 200
 
-# mark an answer as acepted or update an answer
-@question_v2.route('questions/questionID/answers/answerID', methods=["PUT"])
+# mark an answer as accepted or update an answer
+@question_v2.route('questions/<int:questionID>/answers/<int:answerID>', methods=["PUT"])
 @auth_required
-def react_on_answer():
+def react_on_answer(current_user, questionID, answerID):
     """
     Mark answer as acepted or update an answer
     """
-    pass
+    data = request.get_json()
+    errors = {}
+    questions = Question.get_questions(cur)
+    answers = Answer.get_answers_to_question(cur, questionID)
+    question = {}
+    answer = {}
+    for one_question in questions:
+        if one_question["question_id"] == questionID:
+            question = one_question
+    if not question:
+        return jsonify({"missing_question": "Question not found"}), 404
+    for one_answer in answers:
+        if one_answer["answer_id"] == answerID:
+            answer = one_answer
+    if not answer:
+        return jsonify({"missing_answer": "Answer not found"}), 404
+    answer_id = answer["answer_id"]
+    if errors:
+        return jsonify(errors), 400
+    Answer.modify_answer(cur, data["preferred"], answer_id)
+    return jsonify({"message": "Answer marked as preferred successfully"}), 200
 
