@@ -1,4 +1,5 @@
 from config import conn
+from flask import abort
 
 class User:
     """
@@ -65,6 +66,21 @@ class Question:
             response.append(details_data)
 
         return response
+
+    @staticmethod
+    def get_one_question(cursor, question_id):
+        query = "SELECT * FROM questions WHERE id=%s;"
+        cursor.execute(query, [question_id])
+        question = cursor.fetchone()
+        if not question:
+            abort(404, "Question not found")
+        details_data = {}
+        details_data["question_id"] = question[0]
+        details_data["question_title"] = question[1]
+        details_data["question_desc"] = question[2]
+        details_data["date_created"] = question[3]
+        details_data["user_id"] = question[4]
+        return details_data
 
 
 class Answer:

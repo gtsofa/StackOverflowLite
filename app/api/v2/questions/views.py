@@ -15,8 +15,6 @@ from config import conn
 
 
 cur = conn.cursor()
-users = User.get_users(cur)
-questions = Question.get_questions(cur)
 now = datetime.datetime.now()
 
 
@@ -28,7 +26,8 @@ def post_a_question(current_user):
     Post a question
     """
     try:
-
+        questions = Question.get_questions(cur)
+        # users = User.get_users(cur)
         data = request.get_json()
         errors = {}
 
@@ -61,22 +60,24 @@ def get_all_questions():
     """
     Get all questions 
     """
-
+    questions = Question.get_questions(cur)
     if not questions:
         return jsonify({"message": "No questions found"}), 404
 
-    return jsonify({"question": questions}), 200
+    return jsonify({"questions": questions}), 200
 
 
 
 # get a single question by id
-@question_v2.route('/questions/questionID', methods=["GET"])
-@auth_required
+@question_v2.route('/questions/<int:questionID>', methods=["GET"])
 def get_single_question(questionID):
     """
     Get a single question by id
     """
-    pass
+    question = Question.get_one_question(cur, questionID)
+    if not question:
+        return jsonify({"message": "Question not found"}), 404
+    return jsonify(question)
     
 
 # mark an answer as acepted or update an answer
