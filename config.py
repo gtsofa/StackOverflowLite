@@ -2,7 +2,11 @@
 import os
 import psycopg2
 
-
+try:
+    conn_test = psycopg2.connect(
+        "dbname=stack_test host=localhost user=stack password=stack123")
+except Exception as e:
+    print("Unable to connect to the database", e)
 try:
     conn = psycopg2.connect(
         "dbname=stack_dev host=localhost user=stack password=stack123")

@@ -1,11 +1,11 @@
 # app/api/v2/questions/test_questions
 
-
-
 import unittest
-from app import create_app
-
 import json
+from app import create_app
+from config import conn_test
+
+cur = conn_test.cursor
 
 class CreateQuestionTestCase(unittest.TestCase):
     """
@@ -49,27 +49,33 @@ class CreateQuestionTestCase(unittest.TestCase):
            "username":"john",
             "password": "Mama456"
         }
-        # Register a user
-        self.client().post('/api/v2/auth/register', 
-                    data=json.dumps(self.reg_user),
-                    content_type='application/json')
-        # Sign in user
-        self.client().post('/api/v2/auth/login',
-                    data=json.dumps(self.login_reg_user),
-                    content_type='application/json')
+        # # Register a user
+        # self.client().post('/api/v2/auth/register', 
+        #             data=json.dumps(self.reg_user),
+        #             content_type='application/json')
+        # # Sign in user
+        # self.client().post('/api/v2/auth/login',
+        #             data=json.dumps(self.login_reg_user),
+        #             content_type='application/json')
 
     def tearDown(self):
         """
         Will destroy the test data after test runs
         """
-       self.user.clear()
-        self.login_user.clear()
-        self.reg_user.clear()
-        self.login_reg_user.clear()
-        self.one_question.clear()
-        self.two_question.clear()
+        answers_query = "DELETE FROM answers;"
+        questions_query = "DELETE FROM questions;"
+        users_query = "DELETE FROM users;"
+        cur.execute(answers_query)
+        cur.execute(questions_query)
+        cur.execute(users_query)
+        conn_test.commit()
 
-
+    def test_user_can_register(self):
+        """Test user can register"""
+        response = self.client().post('/api/v2/auth/register', 
+                    data=json.dumps(self.reg_user),
+                    content_type='application/json')
+        print(str(response.data))
 
     def test_user_can_post_a_question(self):
         """
