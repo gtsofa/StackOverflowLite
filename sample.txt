@@ -1,0 +1,35 @@
+register1 = {
+            "username":"matteo", 
+            "email": "mat@stackoverflow.com",
+            "password": "mat123",
+            "confirm_password": "mat123"
+        }
+        register2 = {
+            "username":"shaffy", 
+            "email": "shaff@stackoverflow.com",
+            "password": "sha256",
+            "confirm_password": "sha256"
+        }
+        login1 = {
+            "username":"matteo",
+            "password": "mat123"
+        }
+        login2 = {
+            "username":"shaffy",
+            "password": "sha256"
+        }
+        question1 = {
+            "question_title":"What is Flask",
+            "question_desc":"I am a beginner and I wanna know what flask is"
+        } 
+        question2 = {
+            "question_title":"What is Postgres",
+            "question_desc":"Lorem ipsum dolor sit amet"
+        }
+        question3 = {
+            "question_title":"Who is the queen of vionilist?",
+            "question_desc":"I guess MeriBenari takes the show by far if the research says so psum dolor sit amet"
+        }
+        answer1 = {
+            "answer_text":"Flask is a Python microframework"
+        }

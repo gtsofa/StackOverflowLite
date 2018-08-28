@@ -1,4 +1,5 @@
 import os
+import re
 import jwt
 import datetime
 from functools import wraps
@@ -7,9 +8,21 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 from . import auth_v2 
 from app.api.v2.models import User
-from config import conn
+from app.config import conn
 
 cur = conn.cursor()
+
+def valid_username(username):
+    if re.match(r'^[a-zA-Z0-9]{5,20}$', username):
+        return True
+    return False
+
+def valid_email_address(email):
+    if re.match(r'^[a-zA-Z0-9_\-\.]{3,}@.*\.[a-z]{2,4}$', email):
+        return True
+    return False
+
+
 
 def auth_required(fn):
     """

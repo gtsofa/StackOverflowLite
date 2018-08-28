@@ -1,5 +1,6 @@
 # app/api/v2/questions/views.py
 import os
+import re
 import jwt
 import datetime
 
@@ -10,12 +11,26 @@ from . import question_v2
 from app.api.v2.models import Question
 from app.api.v2.models import User
 from app.api.v2.models import Answer
-from app.api.v2.auth.views import auth_required #token_valid
-from config import conn
+from app.api.v2.auth.views import auth_required 
+from app.config import conn
+
+
 
 
 cur = conn.cursor()
 now = datetime.datetime.now()
+
+def valid_question_title(title):
+    if re.match(r'^(?=.*[A-Za-z])[a-zA-Z0-9\s\.,]{2,50}$', title):
+        return True
+    return False
+
+def valid_description_text(description):
+    if re.match(r'^(?=.*[A-Za-z])[^!@#\$%\^\*:]{2,300}$', description):
+        return True
+
+    return False
+
 
 
 @question_v2.route('/questions', methods=["POST"])

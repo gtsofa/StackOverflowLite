@@ -17,12 +17,24 @@ class CreateUserTestCase(unittest.TestCase):
         self.app = create_app(config_name="testing")
         self.client = self.app.test_client
         # set initial values to pass to the database
-        self.test_user = {"username":"maestro", "email":"maestro@stack.com", "password":"pass123", "confirm_password":"pass123"}
-        self.test_login = {"email":"tsofa@stack.com", "password":"pass141"}
-        self.another_user = {"username":"mloi", "email":"mloi@stack.com", "password":"mloi234", "confirm_password":"mloi234"}
-        self.grande = {"username":"saumu", "email":"saumu@stack.com", "password":"0101", "confirm_password":"0101"}
-        self.user = {"username":"mae", "email":"mae@stack.com", "password":"1040", "confirm_password":"4010"}
-        self.login_user = {"email":"mae@stack.com", "password":"1040"}
+        self.test_user = {"username":"kavuku", "email":"kavuku@stack.com", "password":"pass123", "confirm_password":"pass123"}
+        self.test_login = {"email":"mae@stack.com", "password":"pass141"}
+        self.another_user = {"username":"cinzia", "email":"cinzia@stack.com", "password":"mloi234", "confirm_password":"mloi234"}
+        self.grande = {"username":"gianluca", "email":"gianluca@stack.com", "password":"0101", "confirm_password":"0101"}
+        self.user = {"username":"michele", "email":"michele@stack.com", "password":"1040", "confirm_password":"4010"}
+        self.user1 = {"username":"bravo", "email":"bravo@stack.com", "password":"3030", "confirm_password":"3030"}
+        self.login_user = {"email":"mio@stack.com", "password":"1040"}
+
+    def tearDown(self):
+        """
+        destroy the test data for testing purposes
+        """
+        self.test_user.clear()
+        self.test_login.clear()
+        self.another_user.clear()
+        self.grande.clear()
+        self.user.clear()
+        self.login_user.clear()
 
     def test_create_user(self):
         """
@@ -57,7 +69,7 @@ class CreateUserTestCase(unittest.TestCase):
 
     def test_some_details_missing(self):
         """
-        Test api to ensure all required details are given 
+        Test api to ensure all required details are given before a user is created
         """
         response = self.client().post('/api/v2/auth/register',
                     data=json.dumps({
@@ -82,23 +94,21 @@ class CreateUserTestCase(unittest.TestCase):
                     content_type='application/json')
         self.assertEqual(response.status_code, 200)
 
-    def test_sign_out_user(self):
+    def test_empty_data(self):
         """
-        Test api can sign out a user
+        Test api if can register user with empty data
         """
-        # Register user
-        self.client().post('/api/v2/auth/register', 
-                    data=json.dumps(self.user),
-                    content_type='application/json')
-        # Sign in user
-        self.client().post('/api/v2/auth/login',
-                    data=json.dumps(self.login_user),
-                    content_type='application/json')
-        # Log user out
-        response = self.client().post('/api/v2/auth/logout',
-                    data=json.dumps(self.user),
-                    content_type='application/json')
-        self.assertEqual(response.status_code, 200)
+        response = self.client().post('/api/v2/auth/register',
+                        data=json.dumps({
+                            "username":"",
+                            "email":"",
+                            "password":"",
+                            "confirm_password":""
+                        }),
+                        content_type='application/json')
+        self.assertIn("Enter username, email, password, and confirm password to register", str(response.data))
+        
+
 
 
 

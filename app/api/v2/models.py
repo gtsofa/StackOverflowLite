@@ -1,4 +1,6 @@
-from config import conn
+# app/api/v2/models.py
+
+from app.config import conn 
 from flask import abort
 
 class User:

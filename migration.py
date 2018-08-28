@@ -1,8 +1,8 @@
 # migration.py
 
-# create a tables for the application
+# create tables for the application
 
-from config import conn
+from app.config import conn
 
 
 def migration():
