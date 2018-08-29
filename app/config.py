@@ -19,7 +19,7 @@ if os.getenv('FLASK_CONFIG') == "testing":
 
 elif os.getenv('FLASK_CONFIG') == "development":
 
-    conn = psycopg2.connect("dbname=stack_dev host=localhost user=stack password=stack123")
+    conn = psycopg2.connect("postgres://wzlebjmkkdkbut:f01218aca2ecca508c9848f5759ee9094e1fa98b5d3e9ef22089a01d002d089b@ec2-54-235-86-226.compute-1.amazonaws.com:5432/d638bk9r7r4p2")
 
 else:
     print("Unable to connect to the database")

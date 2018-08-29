@@ -112,9 +112,7 @@ class CreateUserTestCase(unittest.TestCase):
         response = self.client().post('/api/v2/auth/login',
                                         data = json.dumps(self.test_login1),
                                         content_type='application/json')
-        print("<<<<<<<<<<<<<<<<<")
-        print(str(response.data))
-        print("<<<<<<<<<<<<<<<<<")
+        
         self.assertEqual(response.status_code, 200)
 
     def test_can_not_create_duplicate_user(self):
