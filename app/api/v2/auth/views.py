@@ -103,6 +103,7 @@ def login():
             token = jwt.encode({"username":user["username"], 
             "exp":datetime.datetime.utcnow() + datetime.timedelta(
                 minutes=120)}, os.getenv('SECRET'))
+            print(token)
             return jsonify({"token":token.decode("UTF-8")}), 200
         # check if authentication fails
         return jsonify({"authentication_error":"Username does not match password"}), 401
