@@ -8,10 +8,10 @@ install:
   - pip install -r requirements.txt
   - pip install coveralls
 before_script:
-  - psql -c 'create user stack with password stack123;' -U postgres
+  - psql -c 'create user stack with password "stack123";' -U postgres
   - psql -c 'create database stack_dev;' -U postgres
   - psql -c 'create database stack_test;' -U postgres
-  - psql -c 'grant all privileges on stack_test to stack;' -U postgres
+  - psql -c 'grant all privileges on database stack_test to stack;' -U postgres
 
 # command to run tests
 script: 
