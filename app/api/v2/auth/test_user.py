@@ -76,7 +76,7 @@ class CreateUserTestCase(unittest.TestCase):
         Check the validity of an email address
         """
         correct_email = "tsofanyule@example.com"
-        wrong_email = "tsofanyule@example.com.com"
+        wrong_email = "tsofanyuleexample.com.com"
         self.assertTrue(valid_email_address(correct_email))
         self.assertFalse(valid_email_address(wrong_email))
 
@@ -86,8 +86,8 @@ class CreateUserTestCase(unittest.TestCase):
         """
         correct_username = "tsofanyule"
         wrong_username = " "
-        self.assertTrue(valid_email_address(correct_username))
-        self.assertFalse(valid_email_address(wrong_username))
+        self.assertTrue(valid_username(correct_username))
+        self.assertFalse(valid_username(wrong_username))
 
     def test_create_user(self):
         """

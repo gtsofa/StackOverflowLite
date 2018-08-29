@@ -108,7 +108,7 @@ class CreateQuestionTestCase(unittest.TestCase):
         """
         Test valid questions titles are allowed
         """
-        correct_title = "How do nasa travel to saturn?"
+        correct_title = "How do nasa travel to saturn"
         wrong_title = ' '
         self.assertTrue(valid_question_title(correct_title))
         self.assertFalse(valid_question_title(wrong_title))
@@ -184,20 +184,16 @@ class CreateQuestionTestCase(unittest.TestCase):
         Test if a user can post answer to a question
         """
         # Post a question
-        self.client().post('/api/v2/questions',
+        r = self.client().post('/api/v2/questions',
                     data=json.dumps(self.one_question),
-                    content_type='application/json')
+                    headers={'content-type':'application/json',
+                        'x-access-token': self.token})
         response1 = self.client().post('/api/v2/questions/1/answers',
                     data=json.dumps(self.one_answer),
                     headers={'content-type':'application/json',
                         'x-access-token': self.token})
-        response = self.client().get('/api/v2/questions/1',
-                    content_type='application/json')
-        # print("<<<<<<<AAAAAAAA<<<<<<<<<")
-        # print(str(response.data))
-        # print("<<<<<<<<<<<<<<<<<<<<<<<")
-        self.assertEqual(response.status_code, 201)
-        self.assertIn('Answer posted successfully', str(response.data))
+        self.assertEqual(response1.status_code, 201)
+        self.assertEqual('Answer successfully posted', response1.json['message'])
 
     def test_user_can_get_answers_to_question(self):
         """
@@ -234,6 +230,14 @@ class CreateQuestionTestCase(unittest.TestCase):
         """
         Test if a question author can accept answer or answer author can update their answer
         """
+        r1 = self.client().post('/api/v2/questions',
+                    data=json.dumps(self.one_question),
+                    headers={'content-type':'application/json',
+                        'x-access-token': self.token})
+        r2 = self.client().post('/api/v2/questions/1/answers',
+                    data=json.dumps(self.one_answer),
+                    headers={'content-type':'application/json',
+                        'x-access-token': self.token})
         response = self.client().put('/api/v2/questions/1/answers/1',
                     data=json.dumps(self.one_question1, ),
                     headers={'content-type':'application/json',
