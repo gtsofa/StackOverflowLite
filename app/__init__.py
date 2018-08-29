@@ -1,5 +1,7 @@
 from flask import Flask
 
+from flasgger import Swagger
+
 from app.config import app_config
 
 def create_app(config_name):
