@@ -3,7 +3,9 @@
 import unittest
 import json
 from app import create_app
-from config import conn
+from app.config import conn
+
+from .views import valid_question_title, valid_description_text
 
 cur = conn.cursor()
 
@@ -41,6 +43,12 @@ class CreateQuestionTestCase(unittest.TestCase):
         self.one_question = {
             "question_title":"What is Flask",
             "question_desc":"I am a beginner and I wanna know what flask is"
+        } 
+
+        self.one_question1 = {
+            "question_title":"What is Flask",
+            "question_desc":"I am a beginner and I wanna know what flask is",
+            "preferred":True
         } 
         self.two_question = {
             "question_title":"What is Postgres",
@@ -82,12 +90,29 @@ class CreateQuestionTestCase(unittest.TestCase):
         answers_query = "DELETE FROM answers;"
         questions_query = "DELETE FROM questions;"
         users_query = "DELETE FROM users;"
+        reset_users = "ALTER SEQUENCE users_id_seq RESTART WITH 1;"
+        reset_questions = "ALTER SEQUENCE questions_id_seq RESTART WITH 1;"
+        reset_answers = "ALTER SEQUENCE answers_id_seq RESTART WITH 1;"
+        cur.execute(reset_answers)
+        cur.execute(reset_questions)
+        cur.execute(reset_users)
         cur.execute(answers_query)
         cur.execute(questions_query)
         cur.execute(users_query)
         conn.commit()
+
+
         
 
+    def test_valid_question_title(self):
+        """
+        Test valid questions titles are allowed
+        """
+        correct_title = "How do nasa travel to saturn?"
+        wrong_title = ' '
+        self.assertTrue(valid_question_title(correct_title))
+        self.assertFalse(valid_question_title(wrong_title))
+        
     def test_user_can_post_a_question(self):
         """
         Test if a user can post a question
@@ -123,7 +148,9 @@ class CreateQuestionTestCase(unittest.TestCase):
                         'x-access-token': self.token})
         response = self.client().get('/api/v2/questions/1',
                     content_type='application/json')
+        print("<<<<<<<AAAAAAAA<<<<<<<<<")
         print(str(response.data))
+        print("<<<<<<<<<<<<<<<<<<<<<<<")
         self.assertEqual(response.status_code,200)
 
     def test_get_a_question_that_doesnt_exits(self):
@@ -136,7 +163,7 @@ class CreateQuestionTestCase(unittest.TestCase):
                     content_type='application/json')
         response = self.client().get('/api/v2/questions/10',
                     content_type='application/json')
-        self.assertIn('Question does not exist', str(response.data))
+        self.assertIn('Question not found', str(response.data))
 
     def test_user_can_fetch_their_own_questions(self):
         """
@@ -145,9 +172,11 @@ class CreateQuestionTestCase(unittest.TestCase):
         # Post a question
         self.client().post('/api/v2/questions',
                     data=json.dumps(self.one_question),
-                    content_type='application/json')
+                    headers={'content-type':'application/json',
+                        'x-access-token': self.token})
         response = self.client().get('/api/v2/my-questions',
-                    content_type='application/json')
+                    headers={'content-type':'application/json',
+                        'x-access-token': self.token})
         self.assertEqual(response.status_code,200)
 
     def test_user_can_answer_a_question(self):
@@ -158,9 +187,15 @@ class CreateQuestionTestCase(unittest.TestCase):
         self.client().post('/api/v2/questions',
                     data=json.dumps(self.one_question),
                     content_type='application/json')
-        response = self.client().post('/api/v2/questions/1/answers',
+        response1 = self.client().post('/api/v2/questions/1/answers',
                     data=json.dumps(self.one_answer),
+                    headers={'content-type':'application/json',
+                        'x-access-token': self.token})
+        response = self.client().get('/api/v2/questions/1',
                     content_type='application/json')
+        # print("<<<<<<<AAAAAAAA<<<<<<<<<")
+        # print(str(response.data))
+        # print("<<<<<<<<<<<<<<<<<<<<<<<")
         self.assertEqual(response.status_code, 201)
         self.assertIn('Answer posted successfully', str(response.data))
 
@@ -171,26 +206,40 @@ class CreateQuestionTestCase(unittest.TestCase):
         # Post a question
         self.client().post('/api/v2/questions',
                     data=json.dumps(self.one_question),
-                    content_type='application/json')
+                    headers={'content-type':'application/json',
+                        'x-access-token': self.token})
         self.client().post('/api/v2/questions/1/answers',
                     data=json.dumps(self.one_answer),
-                    content_type='application/json')
+                    headers={'content-type':'application/json',
+                        'x-access-token': self.token})
         response = self.client().get('/api/v2/questions/1/answers',
                     content_type='application/json')
+        # print("<<<<<<<<<<<<<<<<")
+        # print(str(response.data))
+        # print("<<<<<<<<<<<<<<<<<<<<<<<")
         self.assertEqual(response.status_code,200)
-
+    
     def test_user_can_delete_own_question(self):
         """
         Test if a user can delete their own question
         """
         # delete api/v2/questions/my-questions/1
         # post a question
-        question_id = 
         self.client().post('/api/v2/questions/1',
-                        data=json.dumps(self.three_question))
+                        data=json.dumps(self.three_question),
+                        headers={'content-type':'application/json',
+                        'x-access-token': self.token})
 
     def test_user_can_mark_an_answer_as_accepted_or_update_an_answer(self):
         """
         Test if a question author can accept answer or answer author can update their answer
         """
-        pass
+        response = self.client().put('/api/v2/questions/1/answers/1',
+                    data=json.dumps(self.one_question1, ),
+                    headers={'content-type':'application/json',
+                        'x-access-token': self.token})
+
+        print("<<<<<<<<<<<<<<<<<<")
+        print(str(response.data))
+        print("<<<<<<<<<<<<<<<<<<")
+        self.assertEqual(response.status_code,200)

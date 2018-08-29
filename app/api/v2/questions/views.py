@@ -173,7 +173,7 @@ def get_all_answers_to_a_question(questionID):
     return jsonify({"answers": answers}), 200
 
 # mark an answer as accepted or update an answer
-@question_v2.route('questions/<int:questionID>/answers/<int:answerID>', methods=["PUT"])
+@question_v2.route('/questions/<int:questionID>/answers/<int:answerID>', methods=["PUT"])
 @auth_required
 def react_on_answer(current_user, questionID, answerID):
     """
