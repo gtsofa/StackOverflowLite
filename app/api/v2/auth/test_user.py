@@ -50,6 +50,9 @@ class CreateUserTestCase(unittest.TestCase):
                     data=json.dumps(self.login_token_user),
                     content_type='application/json')
         data = json.loads(token_response.data.decode())
+        print("<<<<<<<<<<<<<<<<<<,,")
+        print(token_response.data)
+        print("<<<<<<<<<<<<<<<<<<<<<<<<<")
         self.token = data['token']
 
     
