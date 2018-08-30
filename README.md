@@ -159,6 +159,11 @@ PUT | /StackOverFlowLite/api/v2/questions/questionID/answers/answerID | Mark an 
 * [stackoverflowlite V1 on Heroku](https://gtsofastackoverflowlite.herokuapp.com/api/v1)
 * [stackoverflowlite V2 on Heroku](https://gtsofastackoverflowlite.herokuapp.com/api/v2)
 
+### Documentation
+ To view the StackOverFlowLite API documentation follow the link bellow:
+ 
+ [Version 2](https://app.swaggerhub.com/apis/gtsofa/stackoverflowlite/2.0.0)
+
 ### Screenshots
 
 ![Registered User](https://github.com/gtsofa/StackOverflowLite/blob/challenge3/UI/screenshots/register2018-08-30%2010%3A30%3A55.png)
