@@ -201,6 +201,10 @@ def react_on_answer(current_user, questionID, answerID):
             answer = one_answer
     if not answer:
         return jsonify({"missing_answer": "Answer not found"}), 404
+
+    if not isinstance(data["preferred"], bool):
+        return jsonify({"message":"Answer type should be boolean only"})
+
     answer_id = answer["answer_id"]
     if errors:
         return jsonify(errors), 400
