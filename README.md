@@ -127,8 +127,42 @@ PUT | /StackOverFlowLite/api/v1/questions/questionID/answer/answerID | Edit an a
 DELETE | /StackOverFlowLite/api/v1/questions/questionID/answer/answerID | Delete an answer
 
 
+### Challenge 3 - Create more API endpoints and integrate a database
+
+#### Required Features
+1. Create user account that can sign in the app
+2. Create user account that can sign out of the app
+3. A user can get all questions
+4. A user can get a single question
+5. A user can post a question
+6. A user can delete a question
+7. A user can post an answer to a question
+8. A user can mark an answer as preferred
+9. A user can fetch all questions he or she has ever asked on the platform
+
+### Endpoints for challenge 3
+
+Method | Endpoint | Functionality
+--- | --- | ---
+POST | /StackOverFlowLite/api/v2/auth/signup | Register a user
+POST | /StackOverFlowLite/api/v2/auth/login | Logs in a user
+GET | /StackOverFlowLite/api/v2/questions | Fetches all questions
+GET | /StackOverFlowLite/api/v2/questions/questionID | Fetches a specific question
+POST | /StackOverFlowLite/api/v2/questions | Post a question
+DELETE | /StackOverFlowLite/api/v2/questions/questionID | Delete a question
+POST | /StackOverFlowLite/api/v2/questions/questionID/answer | Post an answer to a question 
+PUT | /StackOverFlowLite/api/v2/questions/questionID/answers/answerID | Mark an answer as an acepted
+
+
+
 #### StackOverFlowLite hosted on Heroku
-* [stackoverflowlite on heroku](https://gtsofastackoverflowlite.herokuapp.com/api/v1)
+* [stackoverflowlite V1 on Heroku](https://gtsofastackoverflowlite.herokuapp.com/api/v1)
+* [stackoverflowlite V2 on Heroku](https://gtsofastackoverflowlite.herokuapp.com/api/v2)
+
+### Screenshots
+
+user register
+
 
 #### Build with
 * HTML, CSS, Javascript
