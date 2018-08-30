@@ -66,7 +66,6 @@ class Question:
             details_data["date_created"] = question[3]
             details_data["user_id"] = question[4]
             response.append(details_data)
-
         return response
 
     @staticmethod

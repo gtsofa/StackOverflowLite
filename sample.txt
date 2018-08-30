@@ -10,6 +10,12 @@ register1 = {
             "password": "sha256",
             "confirm_password": "sha256"
         }
+        register3 = {
+            username":"furaha", 
+            "email": "furaha@stackoverflow.com",
+            "password": "fur256",
+            "confirm_password": "fur256"
+        }
         login1 = {
             "username":"matteo",
             "password": "mat123"
