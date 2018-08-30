@@ -132,6 +132,8 @@ def post_an_answer(current_user, questionID):
         # check for missing details
         if not data['answer_text']:
             errors["missing_details"] = "Enter answer text"
+        # check for duplicate answers
+        
         questions = Question.get_questions(cur)
         question = {}
         for one_question in questions:

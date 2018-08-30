@@ -74,6 +74,9 @@ def register_user():
             return jsonify(errors), 400
         password = generate_password_hash(data["password"])
         confirm_password = generate_password_hash(data["confirm_password"])
+        # check for valid email
+        if not valid_email_address(data['email']):
+            return jsonify({"message":"Invalid email!"})
         User.create_user(cur, data["username"], data["email"], password, confirm_password)
         return jsonify({"message":"User registered successfully"}), 201
     except(ValueError, KeyError, TypeError):
