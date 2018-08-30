@@ -133,6 +133,10 @@ def post_an_answer(current_user, questionID):
         if not data['answer_text']:
             errors["missing_details"] = "Enter answer text"
         # check for duplicate answers
+        answers = Answer.get_answers_to_question(cur, questionID)
+        for answer in answers:
+            if answer["answer_text"] == data["answer_text"]:
+                return jsonify({"message": "Answer already posted"})
         
         questions = Question.get_questions(cur)
         question = {}

@@ -36,6 +36,22 @@ class User:
 
         return results
 
+    @staticmethod
+    def get_single_user(cursor, user_id):
+        query = "SELECT * FROM users WHERE user_id=%s;"
+        cursor.execute(query, [user_id])
+        user = cursor.fetchone()
+        if not user:
+            abort(404, "User not found")
+        user_details = {}
+        user_details["user_id"] = user[0]
+        user_details["username"] = user[1]
+        user_details["email"] = user[2]
+        user_details["password"] = user[3]
+        user_details["confirm_password"] = user[4]
+        return user_details
+
+
 class Question:
     """
     Implement a question
