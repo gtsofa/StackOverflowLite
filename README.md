@@ -161,7 +161,26 @@ PUT | /StackOverFlowLite/api/v2/questions/questionID/answers/answerID | Mark an 
 
 ### Screenshots
 
-user register
+![Registered User](https://github.com/gtsofa/StackOverflowLite/blob/challenge3/UI/screenshots/register2018-08-30%2010%3A30%3A55.png)
+
+Log in User
+![Login User](https://github.com/gtsofa/StackOverflowLite/blob/challenge3/UI/screenshots/loginscreen.png)
+
+Post a question
+![Post a question](https://github.com/gtsofa/StackOverflowLite/blob/challenge3/UI/screenshots/question.png)
+
+Get all questions
+![Get all questions](https://github.com/gtsofa/StackOverflowLite/blob/challenge3/UI/screenshots/getallquestions.png)
+
+Get specific users questions
+![My questions](https://github.com/gtsofa/StackOverflowLite/blob/challenge3/UI/screenshots/myquestions.png)
+
+Post answer to a question
+![Post answer to a question](https://github.com/gtsofa/StackOverflowLite/blob/challenge3/UI/screenshots/postanswertoquestion.png)
+
+Mark answer as preferred
+![Mark answer as preferred](https://github.com/gtsofa/StackOverflowLite/blob/challenge3/UI/screenshots/markansweraspreferred.png)
+
 
 
 #### Build with
