@@ -33,3 +33,7 @@ register1 = {
         answer1 = {
             "answer_text":"Flask is a Python microframework"
         }
+
+        preferred_question = {
+            "preferred": true
+        }
