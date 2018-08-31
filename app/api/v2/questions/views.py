@@ -48,6 +48,10 @@ def post_a_question(current_user):
         if not data['question_title'] or not data["question_desc"]:
             errors["missing_details"] = "Enter question title and question description"
 
+        # check for valid question title
+        if not valid_question_title(data["question_title"]):
+            errors["invalid_title"] = "Title is invalid"
+
         # check for duplicate question entry
         for question in questions:
             if question["question_title"] == data["question_title"]:
@@ -96,6 +100,8 @@ def get_single_question(questionID):
     """
     Get a single question by id
     """
+    if not isinstance(questionID, int):
+        return jsonify({"message":"QuestionID must be integer"})
     question = Question.get_one_question(cur, questionID)
     if not question:
         return jsonify({"message": "Question not found"}), 404
@@ -168,6 +174,8 @@ def get_all_answers_to_a_question(questionID):
     errors = {}
     questions = Question.get_questions(cur)
     question = {}
+    if not isinstance(questionID, int):
+        return jsonify({"message":"QuestionID must be integer"})
     for one_question in questions:
         if one_question["question_id"] == questionID:
             question = one_question

@@ -10,6 +10,25 @@ register1 = {
             "password": "sha256",
             "confirm_password": "sha256"
         }
+        register4 = {
+            "username":"tesoro", 
+            "email": "tesoro@stackoverflow.com",
+            "password": "pass123",
+            "confirm_password": "pass123"
+        }
+        register5 = {
+            "username":"test1", 
+            "email": "test1@stackoverflow.com",
+            "password": "pas123",
+            "confirm_password": "pas123"
+        }
+        reg22 =
+        {
+            "username":"antonio", 
+            "email": "tonio@stackoverflow.com.com",
+            "password": "pasa123",
+            "confirm_password": "pasa123"
+        }
         register3 = {
             username":"furaha", 
             "email": "furaha@stackoverflow.com",
