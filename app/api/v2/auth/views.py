@@ -94,8 +94,6 @@ def login():
             errors["missing_details"] = "Enter username and password to login"
         # check if user exists
         users = User.get_users(cur)
-        # #user_id = current_user["user_id"]
-        # user = User.get_single_user(cur, user_id)
         for one_user in users:
             if one_user["username"] == data["username"]:
                 user = one_user

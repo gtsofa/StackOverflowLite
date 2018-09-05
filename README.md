@@ -104,7 +104,7 @@ POST | /StackOverFlowLite/api/v1/auth/register | Creates a user account
 POST | /StackOverFlowLite/api/v1/auth/login | Logs in a user
 POST | /StackOverFlowLite/api/v1/auth/logout | Logs out a user
 PUT | /StackOverFlowLite/api/v1/auth/reset-password | Reset a password for a logged user
-DELETE | /StackOverFlowLite/api/v1/questions/question-ID | Delete a request of a logged in user
+DELETE | /StackOverFlowLite/api/v1/questions/question-ID | Delete a question by ID
 
 #### Questions Endpoints
 
@@ -115,7 +115,7 @@ POST | /StackOverFlowLite/api/v1/questions/question-ID/answers | Add an answer
 GET | /StackOverFlowLite/api/v1/questions | Lists all questions 
 GET | /StackOverFlowLite/api/v1/questions/questionID | List a question 
 PUT | /StackOverFlowLite/api/v1/questions/questionID | Edit a question of a logged in user
-DELETE | /StackOverFlowLite/api/v1/questions/questionID | Delete a request of a logged in user
+DELETE | /StackOverFlowLite/api/v1/questions/questionID | Delete a question by ID
 
 #### Answers Endpoints
 

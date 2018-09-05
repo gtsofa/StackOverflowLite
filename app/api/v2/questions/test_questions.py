@@ -148,9 +148,6 @@ class CreateQuestionTestCase(unittest.TestCase):
                         'x-access-token': self.token})
         response = self.client().get('/api/v2/questions/1',
                     content_type='application/json')
-        print("<<<<<<<AAAAAAAA<<<<<<<<<")
-        print(str(response.data))
-        print("<<<<<<<<<<<<<<<<<<<<<<<")
         self.assertEqual(response.status_code,200)
 
     def test_get_a_question_that_doesnt_exits(self):
@@ -210,9 +207,6 @@ class CreateQuestionTestCase(unittest.TestCase):
                         'x-access-token': self.token})
         response = self.client().get('/api/v2/questions/1/answers',
                     content_type='application/json')
-        # print("<<<<<<<<<<<<<<<<")
-        # print(str(response.data))
-        # print("<<<<<<<<<<<<<<<<<<<<<<<")
         self.assertEqual(response.status_code,200)
     
     def test_user_can_delete_own_question(self):
@@ -242,8 +236,4 @@ class CreateQuestionTestCase(unittest.TestCase):
                     data=json.dumps(self.one_question1, ),
                     headers={'content-type':'application/json',
                         'x-access-token': self.token})
-
-        print("<<<<<<<<<<<<<<<<<<")
-        print(str(response.data))
-        print("<<<<<<<<<<<<<<<<<<")
         self.assertEqual(response.status_code,200)
