@@ -70,7 +70,7 @@ class Question:
 
     @staticmethod
     def get_questions(cursor):
-        query = "SELECT * FROM questions;"
+        query = "SELECT * FROM questions ORDER by date_created DESC;"
         cursor.execute(query)
         questions = cursor.fetchall()
         response = []
@@ -115,6 +115,12 @@ class Question:
         details_data["date_created"] = question[3]
         details_data["user_id"] = question[4]
         return details_data
+
+    @staticmethod
+    def edit_single_question(cursor, question_title, question_desc, date_created, user_id):
+        query = "UPDATE questions SET question_title=%s, question_desc=%s, date_created=%s, user_id=%s;"
+        cursor.execute(query, (question_title, question_desc, date_created, user_id))
+        conn.commit()
 
     @staticmethod
     def delete_a_question(cursor, question_id):

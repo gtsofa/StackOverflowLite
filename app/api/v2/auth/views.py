@@ -107,7 +107,10 @@ def login():
             "exp":datetime.datetime.utcnow() + datetime.timedelta(
                 minutes=120)}, os.getenv('SECRET'))
             print(token)
-            return jsonify({"token":token.decode("UTF-8")}), 200
+            return jsonify({
+                "token":token.decode("UTF-8"),
+                "username": one_user['username']
+                }), 200
         # check if authentication fails
         return jsonify({"authentication_error":"Username does not match password"}), 401
     except(ValueError, KeyError,TypeError):

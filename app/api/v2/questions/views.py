@@ -107,6 +107,46 @@ def get_single_question(questionID):
         return jsonify({"message": "Question not found"}), 404
     return jsonify(question)
 
+@question_v2.route('/questions/<int:questionID>', methods=["PUT"])
+@auth_required
+def edit_single_question(current_user, questionID):
+    """
+    Edit a single question
+    """
+    try:
+        questions = Question.get_questions(cur)
+        data = request.get_json()
+        question = {}
+        errors = {}
+
+        # check for missing details
+        if not data['question_title'] or not data["question_desc"]:
+            errors["missing_details"] = "Enter question title and question description"
+
+        # check for valid question title
+        if not valid_question_title(data["question_title"]):
+            errors["invalid_title"] = "Title is invalid"
+
+        if errors:
+            return jsonify(errors), 400
+
+        for one_question in questions:
+            if one_question["question_id"] == questionID:
+                question = one_question
+        if not question:
+            return jsonify({"missing_question": "Question not found"}), 404
+
+        if question["user_id"] != current_user["user_id"]:
+            return jsonify({"Unauthorised": "Users can only edit their own questions"}), 401
+        user_id = current_user["user_id"]
+        date_created = (now.strftime("%d-%m-%Y %H:%M:%S"))
+
+        # everything is OK so save question to db
+        Question.edit_single_question(cur , data["question_title"], data['question_desc'], date_created, user_id)
+        return jsonify({"message":"Question successfully edited"})
+    except(ValueError, KeyError, TypeError):
+        return jsonify({"message":"Enter all question details to continue"}), 400
+
 @question_v2.route('/questions/<int:questionID>', methods=["DELETE"])
 @auth_required
 def delete_single_question(current_user, questionID):
