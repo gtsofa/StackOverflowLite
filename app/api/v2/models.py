@@ -117,9 +117,9 @@ class Question:
         return details_data
 
     @staticmethod
-    def edit_single_question(cursor, question_title, question_desc, date_created, user_id):
-        query = "UPDATE questions SET question_title=%s, question_desc=%s, date_created=%s, user_id=%s;"
-        cursor.execute(query, (question_title, question_desc, date_created, user_id))
+    def edit_single_question(cursor, question_title, question_desc, question_id):
+        query = "UPDATE questions SET title=%s, description=%s WHERE (id=%s);"
+        cursor.execute(query, (question_title, question_desc, question_id))
         conn.commit()
 
     @staticmethod
