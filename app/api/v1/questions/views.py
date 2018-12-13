@@ -3,13 +3,10 @@ from flask import jsonify, request
 
 from . import question
 from app.api.v1.questions.models import Question, Answer
-from app.api.v1.auth.models import User
 from app.api.v1.questions.models import Answer
-from app.api.v1.auth.views import all_users
 
 quizz = Question()
 ans = Answer()
-user = User()
 now = datetime.datetime.now()
 all_questions = quizz.questions
 
@@ -23,23 +20,16 @@ def post_question():
         data = request.get_json()
         # Check for details
         if not data['question_title'] or not data['question_desc']:
-            errors['missing_details'] = "Enter username, email, password and confirm password to register"
-        if len(all_users.keys()) == 0:
-            errors["message"] = "No user exists. Register one first"
+            errors['missing_details'] = "Enter a question title and description to post a question"
         if errors:
             return jsonify(errors), 400
-        # Get the first user in the system
-        first_user_key = list(all_users.keys())[0]
-        first_user = all_users[first_user_key]
-        user_id = first_user['user_id']
         question_id = len(all_questions) + 1
         date_posted = (now.day, now.month, now.year)
         # Create question if everything is OK
-        new_question = {"question_id": question_id, "user_id":user_id, "question_title":data['question_title'], 
+        new_question = {"question_id": question_id, "question_title":data['question_title'], 
                     "question_desc":data['question_desc'], "date_posted": date_posted}
         all_questions[question_id] = new_question
-        return jsonify({"message" : "Question posted successfully", 
-                                        "user_id": user_id}), 201
+        return jsonify({"message" : "Question posted successfully"}), 201
     except (ValueError, KeyError, TypeError):
         return jsonify({"message": "Enter all details to post a question"}), 400
 
@@ -49,26 +39,6 @@ def get_questions():
     Retrieve all questions in the system
     """
     return jsonify(all_questions), 200
-
-@question.route('/my-questions', methods=['GET'])
-def get_my_questions():
-    """
-    Retrieve all questions belonging to a user
-    """
-    errors = {}
-    my_questions = []
-    if len(all_users.keys()) == 0:
-        errors["message"] = "No user exists. Register one first"
-    if errors:
-        return jsonify(errors), 400
-    # Get the first user in the system
-    first_user_key = list(all_users.keys())[0]
-    first_user = all_users[first_user_key]
-    user_id = first_user['user_id']
-    for one_quizz in all_questions.values():
-        if one_quizz.get("user_id") == user_id:
-            my_questions.append(one_quizz)
-    return jsonify({"my_questions": my_questions}), 200
 
 @question.route('/questions/<int:question_id>', methods=['GET'])
 def get_one_question(question_id):
@@ -118,19 +88,11 @@ def post_answer_to_question(question_id):
             data = request.get_json()
             answer_id = len(ans.answers) + 1
             question_id = single_question["question_id"]
-            # Get user id
-            if len(all_users.keys()) == 0:
-                errors["message"] = "No user exists. Register one first"
             if errors:
                 return jsonify(errors), 400
-            # Get the first user in the system
-            first_user_key = list(all_users.keys())[0]
-            first_user = all_users[first_user_key]
-            user_id = first_user['user_id']
             date_posted = (now.day, now.month, now.year)
             new_answer = {"answer_id": answer_id, "question_id": question_id, 
-                            "answer_text": data["answer_text"], "date_posted": date_posted,
-                            "user_id": user_id}
+                            "answer_text": data["answer_text"], "date_posted": date_posted}
             ans.answers[answer_id] = new_answer
             return jsonify({"message": "Answer posted successfully"}), 201
         except (ValueError, KeyError, TypeError):
